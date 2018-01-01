@@ -17,10 +17,60 @@ public class Main {
 
     //ToDo select RC/Google/AC
 
+    private static byte[] upgradeModePKT;
+    private static byte[] fileSizePKT;
+    private static  byte[] hashPKT;
+    private static byte[] fileSizePKT2;
+    private static  byte[] hashPKT2;
+
 
     public static void main(String[] args) throws IOException {
+        System.out.println("DUMLRacer 1.0");
 	    System.out.println("Copyright 2017/2018 APIs Research LLC");
         System.out.println("jcase in the house!\n");
+
+        System.out.println("This software comes with NO WARRANTY AT ALL. If it bricks your equipment, your fault not anyone else's. " +
+                "You agree to take full responsibility of any harm, damage, injury or loss of life from using your equipment improperly. "+
+                "Do not use this software to illegally modify your equipment. Do not redistribute this software. Do not use it in any " +
+                "commercial venture without first getting written permission from APIs Research LLC.\n");
+
+
+        if (args.length != 1 || (!args[0].equals("AC") && !args[0].equals("RC"))) {
+            printHelp();
+            return;
+        }
+
+        if (args[0].equals("AC")) {
+            upgradeModePKT = new byte[] {0x55, 0x16, 0x04, (byte)0xFC, 0x2A, 0x28, 0x65, 0x57, 0x40, 0x00, 0x07, 0x00,
+                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x27, (byte)0xD3};
+            fileSizePKT = new byte[] {0x55, 0x1A, 0x04, (byte)0xB1, 0x2A, 0x28, 0x6B, 0x57, 0x40, 0x00, 0x08, 0x00, 0x6F,
+                    (byte)0xE4, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04, 0x20, 0x7F};
+            hashPKT = new byte[] {0x55, 0x1E, 0x04, (byte)0x8A, 0x2A, 0x28, (byte)0xF6, 0x57, 0x40, 0x00, 0x0A, 0x00,
+                    (byte)0xB0, (byte)0x95, (byte)0xDD, 0x44, 0x26, 0x20, 0x1C, (byte)0xB0, 0x58, 0x4A, (byte)0x9A, 0x13,
+                    0x75, 0x3F, (byte)0x92, (byte)0x9D, 0x4F, (byte)0xBB};
+            fileSizePKT2 = new byte[] {0x55, 0x1A, 0x04, (byte)0xB1, 0x2A, 0x28, 0x6B, 0x57, 0x40, 0x00, 0x08, 0x00,
+                    (byte)0xB7, (byte)0xC7, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04, 0x11, 0x35};
+            hashPKT2 = new byte[] {0x55, 0x1E, 0x04, (byte)0x8A, 0x2A, 0x28, (byte)0xF6, 0x57, 0x40, 0x00, 0x0A, 0x00,
+                    0x30, 0x4C, (byte)0xC3, 0x64, 0x71, (byte)0xE3, 0x04, 0x23, 0x35, 0x18, 0x42, (byte)0xA8, 0x23,
+                    (byte)0xB6, (byte)0xA0, 0x41, 0x3C, (byte)0xF3};
+
+        } else if (args[0].equals("RC")) {
+            upgradeModePKT = new byte[] {0x55, 0x16, 0x04, (byte)0xFC, 0x2A, 0x2D, (byte)0xE7, 0x27, 0x40, 0x00, 0x07,
+                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte)0x9F, 0x44};
+            fileSizePKT = new byte[] {0x55, 0x1A, 0x04, (byte)0xB1, 0x2A, 0x2D, (byte)0xEC, 0x27, 0x40, 0x00, 0x08,
+                    0x00, 0x6F, (byte)0xE4, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04, 0x50, (byte)0xFD};
+            hashPKT = new byte[] {0x55, 0x1E, 0x04, (byte)0x8A, 0x2A, 0x2D, 0x02, 0x28, 0x40, 0x00, 0x0A, 0x00, (byte)0xB0,
+                    (byte)0x95, (byte)0xDD, 0x44, 0x26, 0x20, 0x1C, (byte)0xB0, 0x58, 0x4A, (byte)0x9A, 0x13, 0x75, 0x3F,
+                    (byte)0x92, (byte)0x9D, (byte)0x99, (byte)0xD6};
+            fileSizePKT2 = new byte[] {0x55, 0x1A, 0x04, (byte)0xB1, 0x2A, 0x2D, (byte)0xEC, 0x27, 0x40, 0x00, 0x08,
+                    0x00, (byte)0xB7, (byte)0xC7, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04, 0x61, (byte)0xB7};
+            hashPKT2 = new byte[] {0x55, 0x1E, 0x04, (byte)0x8A, 0x2A, 0x2D, 0x02, 0x28, 0x40, 0x00, 0x0A, 0x00, 0x30,
+                    0x4C, (byte)0xC3, 0x64, 0x71, (byte)0xE3, 0x04, 0x23, 0x35, 0x18, 0x42, (byte)0xA8, 0x23, (byte)0xB6,
+                    (byte)0xA0, 0x41, (byte)0xEA, (byte)0x9E};
+        } else {
+            System.out.println("wth?");
+            return;
+        }
 
         System.out.println("I either need to recoup the cost of my Mavic, or sell it. If I can recoup it, I can keep hacking");
         System.out.println("PayPal Donations - > jcase@cunninglogic.com");
@@ -99,14 +149,8 @@ public class Main {
 
 
         //Enter upgrade mode (delete old file if exists)
-        byte[] upgradeModePKT = new byte[] {0x55, 0x16, 0x04, (byte)0xFC, 0x2A, 0x2D, (byte)0xE7, 0x27, 0x40, 0x00, 0x07,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte)0x9F, 0x44};
         activePort.writeBytes(upgradeModePKT,upgradeModePKT.length);
 
-        //Enable Reporting
-        byte[] enableReportingPKT = new byte[] {0x55, 0x0E, 0x04, 0x66, 0x2A, 0x2D, (byte)0xEA, 0x27, 0x40, 0x00, 0x0C,
-                0x00, 0x2C, (byte)0xC8};
-     //   activePort.writeBytes(enableReportingPKT,enableReportingPKT.length);
 
         try {
             Thread.sleep(5000);
@@ -134,14 +178,15 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        byte[] fileSizePKT = new byte[] {0x55, 0x1A, 0x04, (byte)0xB1, 0x2A, 0x2D, (byte)0xEC, 0x27, 0x40, 0x00, 0x08,
-                0x00, 0x6F, (byte)0xE4, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04, 0x50, (byte)0xFD};
+
 
         activePort.writeBytes(fileSizePKT,fileSizePKT.length);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        byte[] hashPKT = new byte[] {0x55, 0x1E, 0x04, (byte)0x8A, 0x2A, 0x2D, 0x02, 0x28, 0x40, 0x00, 0x0A, 0x00, (byte)0xB0,
-                (byte)0x95, (byte)0xDD, 0x44, 0x26, 0x20, 0x1C, (byte)0xB0, 0x58, 0x4A, (byte)0x9A, 0x13, 0x75, 0x3F,
-                (byte)0x92, (byte)0x9D, (byte)0x99, (byte)0xD6};
 
         activePort.writeBytes(hashPKT,hashPKT.length);
 
@@ -164,8 +209,12 @@ public class Main {
             activePort.closePort();
             return;
         }
-        activePort.closePort();
-        activePort.openPort();
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         activePort.writeBytes(upgradeModePKT,upgradeModePKT.length);
       //  activePort.writeBytes(enableReportingPKT,enableReportingPKT.length);
@@ -193,16 +242,20 @@ public class Main {
         }
 
 
-        byte[] fileSizePKT2 = new byte[] {0x55, 0x1A, 0x04, (byte)0xB1, 0x2A, 0x2D, (byte)0xEC, 0x27, 0x40, 0x00, 0x08,
-                0x00, (byte)0xB7, (byte)0xC7, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04, 0x61, (byte)0xB7};
+
 
         activePort.writeBytes(fileSizePKT2,fileSizePKT2.length);
 
-        byte[] hashPKT2 = new byte[] {0x55, 0x1E, 0x04, (byte)0x8A, 0x2A, 0x2D, 0x02, 0x28, 0x40, 0x00, 0x0A, 0x00, 0x30,
-                0x4C, (byte)0xC3, 0x64, 0x71, (byte)0xE3, 0x04, 0x23, 0x35, 0x18, 0x42, (byte)0xA8, 0x23, (byte)0xB6,
-                (byte)0xA0, 0x41, (byte)0xEA, (byte)0x9E};
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
 
         activePort.writeBytes(hashPKT2,hashPKT2.length);
+
 
 
         System.out.println("Starting the second race!");
@@ -211,17 +264,42 @@ public class Main {
         winner = false;
 
 
+        int timeout = 0;
         while (!winner) {
             files = ftpClient.listFiles("/upgrade/upgrade/signimgs");
-            System.out.println("count " + files.length);
             if (files.length == 0) {
                 break;
             }
+            System.out.print(".");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            timeout +=1;
+
+            if (timeout > 300) {
+                System.out.println("Something went wrong, I guess you can try downgrading and see?");
+                activePort.closePort();
+                ftpClient.disconnect();
+                return;
+            }
         }
+
+        System.out.println("Looks like we won the race, try downgrading!");
+
         activePort.closePort();
         ftpClient.disconnect();
 
 
+    }
+
+    private static void printHelp() {
+        System.out.println("java -jar DUMLRacer.jar <mode>");
+        System.out.println("Modes:");
+        System.out.println("AC - target AC");
+        System.out.println("RC - target RC");
     }
 
     private static void race1() throws IOException {
@@ -271,7 +349,6 @@ public class Main {
             }
         }
 
-        System.out.println("wellhello found");
 
         ftpClient.deleteFile("/upgrade/upgrade/signimgs/freedom");
         ftpClient.deleteFile("/upgrade/upgrade/signimgs/jcase");
