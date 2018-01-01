@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="DUMLRacer:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/DUMLRacer_jar</output-path>
+    <root id="archive" name="DUMLRacer.jar">
+      <element id="module-output" name="DUMLRacer" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/commons-net-3.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/jSerialComm-1.3.11.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
