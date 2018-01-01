@@ -1,4 +1,7 @@
 
+
+(https://github.com/CunningLogic/DUMLRacer/blob/master/dumlracer_1024.png?raw=true)
+
 If you don’t agree to the terms in this read me, then stop dont clone, don’t read, don’t use. Don’t email me for support, open an issue if you have one.
 
 I either need to recoup the cost of my Mavic, or sell it. If I can recoup it, I can keep hacking. If I can’t recoup it, I will be selling the drone, and I’ll be done giving the drone community goodies. Sucks, but I can’t really afford to be dropping money on this in the long term.
