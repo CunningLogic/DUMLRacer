@@ -44,6 +44,7 @@ W.S. - $15
 
 V.P. - €2
 
+A.T. - 327.40
 
 Dear DJI, next time someone requests source code they are entitled to under the GPL, you shouldn’t tell them no. You should comply with the license you agreed to. Had you complied, or responded appropriately, this project would never have been public.
 
