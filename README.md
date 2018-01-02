@@ -16,7 +16,7 @@ Amazon giftcards, plain thank yous or anything else -> jcase@cunninglogic.com
 
 Any donations in excess of the drone cost, will go to Special Olympics!
 
-Donations: $320
+Donations:
 
 T.G. - $20
 
@@ -31,6 +31,19 @@ T.Z. - $5
 N.C. - $25
 
 G.T. - $50
+
+G.S. - $30
+
+M.P. - $25
+
+S.M. - $5.8
+
+K.I. - 0.01335496 BitconCash
+
+W.S. - $15
+
+V.P. - €2
+
 
 Dear DJI, next time someone requests source code they are entitled to under the GPL, you shouldn’t tell them no. You should comply with the license you agreed to. Had you complied, or responded appropriately, this project would never have been public.
 
