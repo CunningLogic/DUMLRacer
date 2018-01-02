@@ -268,6 +268,7 @@ public class Main {
         while (!winner) {
             files = ftpClient.listFiles("/upgrade/upgrade/signimgs");
             if (files.length == 0) {
+		winner = true;
                 break;
             }
             System.out.print(".");
