@@ -287,7 +287,7 @@ public class Main {
             }
         }
 
-        System.out.println("Looks like we won the race, try downgrading!");
+        System.out.println("\nLooks like we won the race, try downgrading!");
 
         activePort.closePort();
         ftpClient.disconnect();
