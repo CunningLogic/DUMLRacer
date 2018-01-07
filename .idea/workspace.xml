@@ -7,14 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b481fc99-3d78-4b76-98f5-84e5f44b1edb" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DUMLRacer.jar" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/DUMLRacer/com/cunninglogic/dumlracer/CRC.class" afterPath="$PROJECT_DIR$/out/production/DUMLRacer/com/cunninglogic/dumlracer/CRC.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/DUMLRacer_jar/DUMLRacer.jar" afterPath="$PROJECT_DIR$/out/artifacts/DUMLRacer_jar/DUMLRacer.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/DUMLRacer/com/cunninglogic/dumlracer/Main.class" afterPath="$PROJECT_DIR$/out/production/DUMLRacer/com/cunninglogic/dumlracer/Main.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/resources/stage1.bin" afterPath="$PROJECT_DIR$/src/resources/stage1.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/resources/stage2.bin" afterPath="$PROJECT_DIR$/src/resources/stage2.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/cunninglogic/dumlracer/CRC.java" afterPath="$PROJECT_DIR$/src/com/cunninglogic/dumlracer/CRC.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/cunninglogic/dumlracer/Main.java" afterPath="$PROJECT_DIR$/src/com/cunninglogic/dumlracer/Main.java" />
     </list>
     <ignored path="DUMLRacer.iws" />
@@ -39,12 +34,10 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/cunninglogic/dumlracer/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="36" column="8" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="8" />
+            <state relative-caret-position="390">
+              <caret line="26" column="43" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#connect#0;class#Main#0" expanded="false" />
-                <element signature="method#printHelp#0;class#Main#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -499,8 +492,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#connect#0;class#Main#0" expanded="false" />
-            <element signature="method#printHelp#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -519,8 +510,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#connect#0;class#Main#0" expanded="false" />
-            <element signature="method#printHelp#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -539,8 +528,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#connect#0;class#Main#0" expanded="false" />
-            <element signature="method#printHelp#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -559,8 +546,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#connect#0;class#Main#0" expanded="false" />
-            <element signature="method#printHelp#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -575,12 +560,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cunninglogic/dumlracer/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="36" column="8" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="8" />
+        <state relative-caret-position="390">
+          <caret line="26" column="43" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#connect#0;class#Main#0" expanded="false" />
-            <element signature="method#printHelp#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>

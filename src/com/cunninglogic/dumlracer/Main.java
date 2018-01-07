@@ -24,7 +24,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
 
-        System.out.println("DUMLRacer 1.1");
+        System.out.println("DUMLRacer 1.1.1");
         System.out.println("Copyright 2017/2018 APIs Research LLC");
         System.out.println("jcase in the house!\n");
 
@@ -53,18 +53,15 @@ public class Main {
         System.out.println("After a successful run, you will need to reboot the device.");
         System.out.println("After rebooting you can use adb for root access, or you can downgrade.\n");
 
+        System.out.println(args[0] + " Mode");
 
         if (args[0].equals("RC")) {
             isRC = true;
-            System.out.println("RC Mode");
-        } else {
-            if (args[0].equals("GL")) {
-                isGL = true;
-                System.out.println("GL mode");
-            } else {
-                System.out.println("AC Mode");
-            }
+
+        } else if (args[0].equals("GL")) {
+            isGL = true;
         }
+
         System.out.println();
 
         classLoader = Main.class.getClassLoader();
@@ -360,19 +357,16 @@ public class Main {
 
     private static byte[] getFileSizePacket(int fileSize) {
         byte[] packet = new byte[] {0x55, 0x1A, 0x04, (byte)0xB1, 0x2A, 0x28, 0x6B, 0x57, 0x40, 0x00, 0x08, 0x00,
-                0x00, 0x00, 0x00, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04};
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04};
 
         if (isRC) {
             packet = new byte[] {0x55, 0x1A, 0x04, (byte)0xB1, 0x2A, 0x2D, (byte)0xEC, 0x27, 0x40, 0x00, 0x08, 0x00,
-                    0x00, 0x00, 0x00, 0x00,
-                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04};
+                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04};
         }
 
         if (isGL) {
             packet = new byte[] {0x55, 0x1A, 0x04, (byte)0xB1, 0x2A, 0x3C, (byte)0xFD, 0x35, 0x40, 0x00, 0x08, 0x00,
-                    0x00, 0x00, 0x00, 0x00,
-                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04};
+                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04};
         }
 
         byte[] size = ByteBuffer.allocate(4).putInt(fileSize).array();
@@ -444,6 +438,7 @@ public class Main {
         if (isGL) {
             packet = new byte[] {0x55, 0x0E, 0x04, 0x66, 0x2A, 0x3C, (byte)0xFA, 0x35, 0x40, 0x00, 0x0C, 0x00, 0x48, 0x02};
         }
+
         return packet;
     }
 
