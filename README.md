@@ -47,12 +47,6 @@ Usage:
     }
 ```
 ```
-ToDo:
-	Add root payload, version 1.0 only enabled downgrading
-	Play with sleeps and dummy file size, we can speed up this process.
-	Finish testing CRC and dynamically generate the packets
-
-
 Change Log:
 1.1.1:
 	Google Support
