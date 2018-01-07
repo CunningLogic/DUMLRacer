@@ -3,6 +3,8 @@
 # DUMLRacer
 ![gogospeedracer](https://github.com/CunningLogic/DUMLRacer/blob/master/dumlracer_1024.png?raw=true)
 
+Downloads:
+
 I'm on twitter ! http://twitter.com/jcase
 
 If you don’t agree to the terms in this read me, then stop dont clone, don’t read, don’t use. Don’t email me for support, open an issue if you have one.
