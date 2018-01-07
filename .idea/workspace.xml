@@ -6,12 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b481fc99-3d78-4b76-98f5-84e5f44b1edb" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/DUMLRacer_jar/DUMLRacer.jar" afterPath="$PROJECT_DIR$/out/artifacts/DUMLRacer_jar/DUMLRacer.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/DUMLRacer/com/cunninglogic/dumlracer/Main.class" afterPath="$PROJECT_DIR$/out/production/DUMLRacer/com/cunninglogic/dumlracer/Main.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/cunninglogic/dumlracer/Main.java" afterPath="$PROJECT_DIR$/src/com/cunninglogic/dumlracer/Main.java" />
-    </list>
+    <list default="true" id="b481fc99-3d78-4b76-98f5-84e5f44b1edb" name="Default" comment="" />
     <ignored path="DUMLRacer.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -34,8 +29,8 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/cunninglogic/dumlracer/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="26" column="43" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
+            <state relative-caret-position="173">
+              <caret line="333" column="0" selection-start-line="333" selection-start-column="0" selection-end-line="333" selection-end-column="45" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -560,8 +555,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/cunninglogic/dumlracer/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="43" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
+        <state relative-caret-position="173">
+          <caret line="333" column="0" selection-start-line="333" selection-start-column="0" selection-end-line="333" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

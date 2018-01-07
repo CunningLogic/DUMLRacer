@@ -42,6 +42,7 @@ Usage:
         System.out.println("Modes:");
         System.out.println("AC - target AC");
         System.out.println("RC - target RC");
+        System.out.println("GL - target GL");
     }
 
 ToDo:
@@ -51,6 +52,8 @@ ToDo:
 
 
 Change Log:
+1.1.1:
+	Google Support
 1.1:
 	Persistent root via adb
 	Massive re-write
@@ -72,6 +75,7 @@ Greetz/shouts/thank yous
 
 @diff & @beaups for always hacking with me
 
+@tylkologin
 @opcode
 @kilrah
 @kdover
