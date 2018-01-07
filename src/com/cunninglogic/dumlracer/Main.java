@@ -19,12 +19,13 @@ public class Main {
 
 
     private static boolean isRC = false;
+    private static boolean isGL = false;
 
     public static void main(String[] args) throws IOException {
 
 
         System.out.println("DUMLRacer 1.1");
-	    System.out.println("Copyright 2017/2018 APIs Research LLC");
+        System.out.println("Copyright 2017/2018 APIs Research LLC");
         System.out.println("jcase in the house!\n");
 
         System.out.println("This software comes with NO WARRANTY AT ALL. If it bricks your equipment, your fault not" +
@@ -34,9 +35,9 @@ public class Main {
         System.out.println("Do not use this software to illegally modify your equipment. Do not redistribute this software. " +
                 "Do not use it in any ");
         System.out.println("commercial venture without first getting written permission from APIs Research LLC.\n");
-        
 
-        if (args.length != 1 || (!args[0].equals("AC") && !args[0].equals("RC"))) {
+
+        if (args.length != 1 || (!args[0].equals("AC") && !args[0].equals("RC") && !args[0].equals("GL"))) {
             printHelp();
             return;
         }
@@ -57,7 +58,12 @@ public class Main {
             isRC = true;
             System.out.println("RC Mode");
         } else {
-            System.out.println("AC Mode");
+            if (args[0].equals("GL")) {
+                isGL = true;
+                System.out.println("GL mode");
+            } else {
+                System.out.println("AC Mode");
+            }
         }
         System.out.println();
 
@@ -328,6 +334,7 @@ public class Main {
         System.out.println("Modes:");
         System.out.println("AC - target AC");
         System.out.println("RC - target RC");
+        System.out.println("GL - target GL");
     }
 
     public static void uploadFile(InputStream payload) throws IOException {
@@ -362,6 +369,12 @@ public class Main {
                     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04};
         }
 
+        if (isGL) {
+            packet = new byte[] {0x55, 0x1A, 0x04, (byte)0xB1, 0x2A, 0x3C, (byte)0xFD, 0x35, 0x40, 0x00, 0x08, 0x00,
+                    0x00, 0x00, 0x00, 0x00,
+                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04};
+        }
+
         byte[] size = ByteBuffer.allocate(4).putInt(fileSize).array();
 
         packet[12] = size[3];
@@ -378,6 +391,11 @@ public class Main {
 
         if (isRC) {
             packet = new byte[] {0x55, 0x1E, 0x04, (byte)0x8A, 0x2A, 0x2D, 0x02, 0x28, 0x40, 0x00, 0x0A, 0x00,
+                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+        }
+
+        if (isGL) {
+            packet = new byte[] {0x55, 0x1E, 0x04, (byte)0x8A, 0x2A, 0x3C, 0x5B, 0x36, 0x40, 0x00, 0x0A, 0x00,
                     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
         }
 
@@ -405,6 +423,11 @@ public class Main {
                     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte)0x9F, 0x44};
         }
 
+        if (isGL) {
+            packet = new byte[] {0x55, 0x16, 0x04, (byte)0xFC, 0x2A, 0x3C, (byte)0xF7, 0x35, 0x40, 0x00, 0x07, 0x00, 
+                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x29};
+        }
+
         return packet;
     }
 
@@ -417,7 +440,12 @@ public class Main {
             packet = new byte[] {0x55, 0x0E, 0x04, 0x66, 0x2A, 0x2D, (byte)0xEA, 0x27, 0x40, 0x00, 0x0C, 0x00, 0x2C,
                     (byte)0xC8};
         }
+
+        if (isGL) {
+            packet = new byte[] {0x55, 0x0E, 0x04, 0x66, 0x2A, 0x3C, (byte)0xFA, 0x35, 0x40, 0x00, 0x0C, 0x00, 0x48, 0x02};
+        }
         return packet;
     }
 
 }
+
