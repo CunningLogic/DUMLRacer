@@ -70,6 +70,8 @@ Greetz/shouts/thank yous
 
 @mywife - for not saying a damn word when you know I spent wayyyy to much money on a drone
 
+@diff & @beaups for always hacking with me
+
 @opcode
 @kilrah
 @kdover
