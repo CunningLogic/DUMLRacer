@@ -3,7 +3,7 @@
 # DUMLRacer
 ![gogospeedracer](https://github.com/CunningLogic/DUMLRacer/blob/master/dumlracer_1024.png?raw=true)
 
-Downloads:
+Downloads: https://github.com/CunningLogic/DUMLRacer/releases
 
 I'm on twitter ! http://twitter.com/jcase
 
