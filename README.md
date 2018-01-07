@@ -11,11 +11,12 @@ If you don’t agree to the terms in this read me, then stop dont clone, don’t
 
 I either need to recoup the cost of my Mavic, or sell it. If I can recoup it, I can keep hacking. If I can’t recoup it, I will be selling the drone, and I’ll be done giving the drone community goodies. Sucks, but I can’t really afford to be dropping money on this in the long term.
 
+```
 PayPal Donations - > jcase@cunninglogic.com
 Bitcoin Donations - > 1LrunXwPpknbgVYcBJyDk6eanxTBYnyRKN
 Bitcoin Cash Donations - > 1LrunXwPpknbgVYcBJyDk6eanxTBYnyRKN
 Amazon giftcards, plain thank yous or anything else -> jcase@cunninglogic.com
-
+```
 Any donations in excess of the drone cost, will go to Special Olympics!
 
 Donations: $857 out of $899+tax
@@ -35,7 +36,7 @@ This software comes with NO WARRANTY AT ALL. If it bricks your equipment, it is 
 
 
 DUMLRacer is a race condition in the update system for DJI drones and remotes that run Android.
-
+```
 Usage:
     private static void printHelp() {
         System.out.println("java -jar DUMLRacer.jar <mode>");
@@ -44,7 +45,7 @@ Usage:
         System.out.println("RC - target RC");
         System.out.println("GL - target GL");
     }
-
+```
 ToDo:
 	Add root payload, version 1.0 only enabled downgrading
 	Play with sleeps and dummy file size, we can speed up this process.
