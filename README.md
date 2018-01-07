@@ -16,35 +16,9 @@ Amazon giftcards, plain thank yous or anything else -> jcase@cunninglogic.com
 
 Any donations in excess of the drone cost, will go to Special Olympics!
 
-Donations:
+Donations: $857 out of $899+tax
 
-T.G. - $20
 
-D.W. - $50
-
-W.M. - $20
-
-NLZ  - $150
-
-T.Z. - $5
-
-N.C. - $25
-
-G.T. - $50
-
-G.S. - $30
-
-M.P. - $25
-
-S.M. - $5.8
-
-K.I. - 0.01335496 BitconCash
-
-W.S. - $15
-
-V.P. - €2
-
-A.T. - 327.40
 
 Dear DJI, next time someone requests source code they are entitled to under the GPL, you shouldn’t tell them no. You should comply with the license you agreed to. Had you complied, or responded appropriately, this project would never have been public.
 
@@ -75,6 +49,10 @@ ToDo:
 
 
 Change Log:
+1.1:
+	Persistent root via adb
+	Massive re-write
+	More Reliable
 1.0:
 	Initial release
 
@@ -95,8 +73,10 @@ Greetz/shouts/thank yous
 @kdover
 @hdnes
 @diff
-@jexxab
+@jezzab
 @jan2642
 @coldflake
+@hdnes
+@b1n4ry
 
 @bunch of ppl i left off because i need a break from pc
