@@ -1,4 +1,11 @@
 
+Yes it works on V01.040.0200
+
+```
+![wrong](https://github.com/CunningLogic/DUMLRacer/blob/master/wrong.png?raw=true)
+```
+No, you errogant ass, you are wrong. Go ahead brag about your years of drone experience, I only have two weeks with drones, and I seem to have no problem downgrading.
+
 
 # DUMLRacer
 ![gogospeedracer](https://github.com/CunningLogic/DUMLRacer/blob/master/dumlracer_1024.png?raw=true)

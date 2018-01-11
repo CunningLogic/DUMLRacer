@@ -17,7 +17,6 @@ public class Main {
 
     private static FTPClient ftpClient;
 
-
     private static boolean isRC = false;
     private static boolean isGL = false;
 
@@ -66,6 +65,8 @@ public class Main {
 
         classLoader = Main.class.getClassLoader();
 
+
+        //Serial Port Chooser
         int count = 1;
 
         System.out.println("Choose target port: (* suggested port)");
@@ -114,9 +115,8 @@ public class Main {
 
 
 
-
+        //Payloads in array so we can get md5sum
         byte[] payload1 = isToArray(classLoader.getResourceAsStream("resources/stage1.bin"));
-
         byte[] payload2 = isToArray(classLoader.getResourceAsStream("resources/stage2.bin"));
 
 
@@ -156,7 +156,7 @@ public class Main {
 
         ftpClient.rename("/upgrade/upgrade/signimgs/jcase","/upgrade/upgrade/jcase");
 
-
+        //Some probably completely unneeded packet that I dont recall putting in here, or know what it does
         write(new byte[]{0x55, 0x0D, 0x04, 0x33, 0x2A, 0x28, 0x68, 0x57, 0x00, 0x00, 0x0A, (byte)0xF0, 0x3C});
         System.out.println("You won race one, taking a breather for 10 seconds");
 
